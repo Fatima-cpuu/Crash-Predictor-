@@ -1,0 +1,67 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(PredictorApp());
+}
+
+class PredictorApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Crash Predictor',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: PredictorHomePage(),
+    );
+  }
+}
+
+class PredictorHomePage extends StatefulWidget {
+  @override
+  _PredictorHomePageState createState() => _PredictorHomePageState();
+}
+
+class _PredictorHomePageState extends State<PredictorHomePage> {
+  TextEditingController _crashPointController = TextEditingController();
+  String _predictedCrash = "Waiting for prediction...";
+
+  void predictCrash() {
+    setState(() {
+      _predictedCrash = "Predicted Crash Point: " + _crashPointController.text;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Crash Predictor')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              controller: _crashPointController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: 'Enter crash point',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: predictCrash,
+              child: Text('Predict Crash'),
+            ),
+            SizedBox(height: 20),
+            Text(
+              _predictedCrash,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
